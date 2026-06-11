@@ -115,43 +115,38 @@ window.addEventListener('scroll',()=>{
   const legF=document.getElementById('legF'),legB=document.getElementById('legB');
   const armF=document.getElementById('armF'),armB=document.getElementById('armB');
   let px=-90,t=0,conf=98.2;
-  const SVG_W=58,SVG_H=116,BOX_W=74,BOX_H=124;
   function frame(){
     const W=stage.offsetWidth,H=stage.offsetHeight;
     t+=.085; px+=1.5;
     if(px>W+90){px=-90; conf=95+Math.random()*4.5;}
     const sw=Math.sin(t);
-    // Limb animation
     legF.style.transform=`rotate(${sw*24}deg)`;
     legB.style.transform=`rotate(${-sw*24}deg)`;
     armF.style.transform=`rotate(${-sw*20}deg)`;
     armB.style.transform=`rotate(${sw*20}deg)`;
     const bob=Math.abs(sw)*2.6;
-    // Walker: position:absolute; bottom:13%; left:0
-    // translateX(px) moves left edge to px from stage left
-    // translateY(-bob) moves up by bob px from bottom:13% baseline
     walker.style.transform=`translateX(${px}px) translateY(${-bob}px)`;
-    // Compute walker top-left in stage coordinates (same as box since both position:absolute in stage)
-    // walker bottom edge = H*0.87 from stage top (bottom:13% = 13% from bottom = 87% from top)
-    // walker top edge = H*0.87 - SVG_H - bob (after translateY(-bob))
-    const wTop = H*0.87 - SVG_H - bob;
-    const wLeft = px; // translateX(px) from left:0
-    // Person center X in SVG = 29px => stage center X = wLeft + 29
-    const personCX = wLeft + 29;
-    // Box: center on person, aligned with walker top
-    const bLeft = personCX - BOX_W/2;   // center box on person
-    const bTop  = wTop - 4;              // 4px above walker top (tight fit)
-    // Apply using left/top directly (no transform ambiguity)
-    box.style.left   = bLeft+'px';
-    box.style.top    = bTop+'px';
-    box.style.width  = BOX_W+'px';
-    box.style.height = BOX_H+'px';
-    // Shadow
-    if(shadow){shadow.style.left=(px+6)+'px'; shadow.style.transform=`scaleX(${1+Math.abs(sw)*.15})`;}
-    // Crosshairs
-    chx.style.transform=`translateX(${personCX}px)`;
-    chy.style.transform=`translateY(${bTop+BOX_H/2}px)`;
-    // Telemetry flicker
+    // getBoundingClientRect: reads actual rendered pixel position — no math assumptions
+    const sr=stage.getBoundingClientRect();
+    const wr=walker.getBoundingClientRect();
+    // walker position relative to stage (accounts for all CSS, transforms, padding)
+    const wL=wr.left-sr.left;
+    const wT=wr.top-sr.top;
+    const wW=wr.width;
+    const wH=wr.height;
+    // box: centered horizontally on walker, same vertical bounds with small padding
+    box.style.left=(wL-4)+'px';
+    box.style.top=(wT-4)+'px';
+    box.style.width=(wW+8)+'px';
+    box.style.height=(wH+8)+'px';
+    // shadow
+    if(shadow){shadow.style.left=(wL+wW/2-23)+'px';}
+    // crosshairs through person center
+    const cx=wL+wW/2;
+    const cy=wT+wH/2;
+    chx.style.transform=`translateX(${cx}px)`;
+    chy.style.transform=`translateY(${cy}px)`;
+    // telemetry
     if(Math.random()<.025){
       conf=Math.min(99.4,Math.max(94.5,conf+(Math.random()-.5)*1.6));
       const c=conf.toFixed(1)+'%';
