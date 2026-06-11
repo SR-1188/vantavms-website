@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — VANTA VMS</title>
+<meta name="description" content="Browser-native enterprise video management system. WebRTC streaming, AI motion detection, PTZ control.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="reticle"><div class="rl t"></div><div class="rl b"></div><div class="rl l"></div><div class="rl r"></div><div class="rc"></div><div class="rring"></div></div>
+<div id="ret-label">TRACKING</div>
+<nav id="nav" class="scrolled">
+  <a href="index.html" class="nav-logo">VANTA <span>VMS</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="industries.html">Industries</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Request Demo</a>
+</nav>
+
+
+<div class="page-hero">
+  <div class="crumb"><a href="index.html">HOME</a> / <span>CONTACT</span></div>
+  <div class="ey">Get In Touch</div>
+  <h1 class="sec-h">Request a demo.<br>See it run live.</h1>
+  <p class="sec-sub">No slide decks. No vaporware. A live system with real cameras, real detection, real control.</p>
+</div>
+
+<div class="sec" style="padding-top:0">
+  <div class="contact-grid">
+    <div class="contact-form rv">
+      <div class="cf-label">NAME *</div>
+      <input type="text" class="cf-inp" id="cf-name" placeholder="Your full name">
+      <div class="cf-label">WORK EMAIL *</div>
+      <input type="email" class="cf-inp" id="cf-email" placeholder="you@company.com">
+      <div class="cf-label">COMPANY</div>
+      <input type="text" class="cf-inp" id="cf-company" placeholder="Company name">
+      <div class="cf-label">MESSAGE</div>
+      <textarea class="cf-inp" id="cf-msg" placeholder="Tell us about your deployment: number of cameras, sites, current system..."></textarea>
+      <button class="btn-p" id="cf-btn" onclick="handleContact()" style="margin-top:8px">Send Message</button>
+    </div>
+    <div class="contact-info">
+      <div class="ci-card rv d1">
+        <div class="ci-t">Direct Email</div>
+        <div class="ci-d">For demos and partnership enquiries:<br><a href="mailto:demo@vantavms.com">demo@vantavms.com</a></div>
+      </div>
+      <div class="ci-card rv d2">
+        <div class="ci-t">Live Demo</div>
+        <div class="ci-d">We run demos on a live deployment with real Axis and Bosch hardware &mdash; live streams, motion-triggered recording, PTZ control, the works. 30 minutes, your screen or ours.</div>
+      </div>
+      <div class="ci-card rv d3">
+        <div class="ci-t">Deployment Regions</div>
+        <div class="ci-d">Currently deploying across <b style="color:var(--txt)">India</b> and the <b style="color:var(--txt)">Middle East</b>. On-premise installation with full handover and operator training.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">VANTA VMS</div>
+  <div class="foot-copy">&#169; 2026 VANTA VMS &mdash; vantavms.com</div>
+  <div class="foot-links">
+    <a href="features.html">Features</a>
+    <a href="industries.html">Industries</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
