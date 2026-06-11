@@ -114,6 +114,11 @@ window.addEventListener('scroll',()=>{
   const lblEl=document.getElementById('dblbl'),tconf=document.getElementById('tconf'),tvel=document.getElementById('tvel'),tinf=document.getElementById('tinf');
   const legF=document.getElementById('legF'),legB=document.getElementById('legB');
   const armF=document.getElementById('armF'),armB=document.getElementById('armB');
+  // Walker SVG: 58px wide, 116px tall
+  // Person center X in SVG = 29px
+  // Person head top in SVG = ~6px, feet bottom = ~108px => body height ~102px
+  // Walker CSS: position:absolute; bottom:13%; left:0
+  // Walker transform: translateX(x) + bob => coordinate origin is same as box (both absolute in stage)
   let x=-90,t=0,conf=98.2;
   function frame(){
     const W=stage.offsetWidth,H=stage.offsetHeight;
@@ -124,13 +129,23 @@ window.addEventListener('scroll',()=>{
     legB.style.transform=`rotate(${-sw*24}deg)`;
     armF.style.transform=`rotate(${-sw*20}deg)`;
     armB.style.transform=`rotate(${sw*20}deg)`;
-    const bob=Math.abs(Math.sin(t))*2.6;
-    walker.style.transform=`translate(${x}px,${-bob}px)`;
-    if(shadow)shadow.style.transform=`translate(${x+6}px,0) scaleX(${1+Math.abs(sw)*.18})`;
-    const bx=x-8,by=H*.87-114-8;
+    const bob=Math.abs(sw)*2.6;
+    // Walker: position:absolute bottom:13% left:0, then translateX(x) + vertical bob
+    walker.style.transform=`translateX(${x}px) translateY(${-bob}px)`;
+    // Walker bottom = H*0.13 from stage bottom => walker top from stage top = H - H*0.13 - 116
+    const walkerTop = H*0.87 - 116 - bob;
+    const walkerCenterX = x + 29; // center of 58px SVG
+    // Box: surround person with 6px padding all sides
+    const bx = walkerCenterX - 37; // box 74px wide, centered on person
+    const by = walkerTop - 6;      // 6px above head
+    box.style.width='74px';
+    box.style.height='128px';
     box.style.transform=`translate(${bx}px,${by}px)`;
-    chx.style.transform=`translateX(${x+29}px)`;
-    chy.style.transform=`translateY(${by+62}px)`;
+    // Shadow
+    if(shadow){shadow.style.left=(x+6)+'px';shadow.style.transform=`scaleX(${1+Math.abs(sw)*.18})`;}
+    // Crosshairs
+    chx.style.transform=`translateX(${walkerCenterX}px)`;
+    chy.style.transform=`translateY(${by+64}px)`;
     if(Math.random()<.025){
       conf=Math.min(99.4,Math.max(94.5,conf+(Math.random()-.5)*1.6));
       const c=conf.toFixed(1)+'%';
