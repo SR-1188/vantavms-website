@@ -114,38 +114,44 @@ window.addEventListener('scroll',()=>{
   const lblEl=document.getElementById('dblbl'),tconf=document.getElementById('tconf'),tvel=document.getElementById('tvel'),tinf=document.getElementById('tinf');
   const legF=document.getElementById('legF'),legB=document.getElementById('legB');
   const armF=document.getElementById('armF'),armB=document.getElementById('armB');
-  // Walker SVG: 58px wide, 116px tall
-  // Person center X in SVG = 29px
-  // Person head top in SVG = ~6px, feet bottom = ~108px => body height ~102px
-  // Walker CSS: position:absolute; bottom:13%; left:0
-  // Walker transform: translateX(x) + bob => coordinate origin is same as box (both absolute in stage)
-  let x=-90,t=0,conf=98.2;
+  let px=-90,t=0,conf=98.2;
+  const SVG_W=58,SVG_H=116,BOX_W=74,BOX_H=124;
   function frame(){
     const W=stage.offsetWidth,H=stage.offsetHeight;
-    t+=.085;x+=1.5;
-    if(x>W+90){x=-90;conf=95+Math.random()*4.5}
+    t+=.085; px+=1.5;
+    if(px>W+90){px=-90; conf=95+Math.random()*4.5;}
     const sw=Math.sin(t);
+    // Limb animation
     legF.style.transform=`rotate(${sw*24}deg)`;
     legB.style.transform=`rotate(${-sw*24}deg)`;
     armF.style.transform=`rotate(${-sw*20}deg)`;
     armB.style.transform=`rotate(${sw*20}deg)`;
     const bob=Math.abs(sw)*2.6;
-    // Walker: position:absolute bottom:13% left:0, then translateX(x) + vertical bob
-    walker.style.transform=`translateX(${x}px) translateY(${-bob}px)`;
-    // Walker bottom = H*0.13 from stage bottom => walker top from stage top = H - H*0.13 - 116
-    const walkerTop = H*0.87 - 116 - bob;
-    const walkerCenterX = x + 29; // center of 58px SVG
-    // Box: surround person with 6px padding all sides
-    const bx = walkerCenterX - 37; // box 74px wide, centered on person
-    const by = walkerTop - 6;      // 6px above head
-    box.style.width='74px';
-    box.style.height='128px';
-    box.style.transform=`translate(${bx}px,${by}px)`;
+    // Walker: position:absolute; bottom:13%; left:0
+    // translateX(px) moves left edge to px from stage left
+    // translateY(-bob) moves up by bob px from bottom:13% baseline
+    walker.style.transform=`translateX(${px}px) translateY(${-bob}px)`;
+    // Compute walker top-left in stage coordinates (same as box since both position:absolute in stage)
+    // walker bottom edge = H*0.87 from stage top (bottom:13% = 13% from bottom = 87% from top)
+    // walker top edge = H*0.87 - SVG_H - bob (after translateY(-bob))
+    const wTop = H*0.87 - SVG_H - bob;
+    const wLeft = px; // translateX(px) from left:0
+    // Person center X in SVG = 29px => stage center X = wLeft + 29
+    const personCX = wLeft + 29;
+    // Box: center on person, aligned with walker top
+    const bLeft = personCX - BOX_W/2;   // center box on person
+    const bTop  = wTop - 4;              // 4px above walker top (tight fit)
+    // Apply using left/top directly (no transform ambiguity)
+    box.style.left   = bLeft+'px';
+    box.style.top    = bTop+'px';
+    box.style.width  = BOX_W+'px';
+    box.style.height = BOX_H+'px';
     // Shadow
-    if(shadow){shadow.style.left=(x+6)+'px';shadow.style.transform=`scaleX(${1+Math.abs(sw)*.18})`;}
+    if(shadow){shadow.style.left=(px+6)+'px'; shadow.style.transform=`scaleX(${1+Math.abs(sw)*.15})`;}
     // Crosshairs
-    chx.style.transform=`translateX(${walkerCenterX}px)`;
-    chy.style.transform=`translateY(${by+64}px)`;
+    chx.style.transform=`translateX(${personCX}px)`;
+    chy.style.transform=`translateY(${bTop+BOX_H/2}px)`;
+    // Telemetry flicker
     if(Math.random()<.025){
       conf=Math.min(99.4,Math.max(94.5,conf+(Math.random()-.5)*1.6));
       const c=conf.toFixed(1)+'%';
