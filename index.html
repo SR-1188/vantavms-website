@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VANTA VMS — See Everything. Miss Nothing.</title>
+<meta name="description" content="Browser-native enterprise video management system. WebRTC streaming, AI motion detection, PTZ control.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="reticle"><div class="rl t"></div><div class="rl b"></div><div class="rl l"></div><div class="rl r"></div><div class="rc"></div><div class="rring"></div></div>
+<div id="ret-label">TRACKING</div>
+<nav id="nav" class="scrolled">
+  <a href="index.html" class="nav-logo">VANTA <span>VMS</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="industries.html">Industries</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Request Demo</a>
+</nav>
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow">Enterprise Video Management System</div>
+      <h1 class="hero-title">See Everything.<br><span class="ac">Miss Nothing.</span></h1>
+      <p class="hero-sub">VANTA is a <strong>browser-native VMS</strong> built for enterprise security operations. Real-time WebRTC streaming, zero plugins, instant deployment on any device.</p>
+      <div class="hero-acts">
+        <a href="contact.html" class="btn-p">Request Demo</a>
+        <a href="features.html" class="btn-g">Explore Features</a>
+      </div>
+    </div>
+    <div>
+      <div class="cam-wrap">
+        <div class="cam-grid" id="camgrid">
+<div class="cam-feed">
+            <div class="cam-bg"></div><div class="scene-lines"></div>
+            <div class="cam-scan"></div>
+            <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+            <div class="cam-detect" style="top:28%;left:38%;width:22%;height:34%"></div>
+            <div class="cam-lbl">CAM 01 &mdash; LOBBY</div>
+            <div class="cam-live-badge"><div class="live-dot"></div>LIVE</div>
+            <div class="cam-fps">30 FPS</div>
+            <div class="cam-ts" id="ts0"></div>
+            <div class="cam-motion" id="m0"><div class="motion-lbl">// MOTION DETECTED</div></div>
+            <div class="cam-hover"></div>
+          </div>
+<div class="cam-feed">
+            <div class="cam-bg"></div><div class="scene-lines"></div>
+            <div class="cam-scan"></div>
+            <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+            
+            <div class="cam-lbl">CAM 02 &mdash; ENTRANCE</div>
+            <div class="cam-live-badge"><div class="live-dot"></div>LIVE</div>
+            <div class="cam-fps">25 FPS</div>
+            <div class="cam-ts" id="ts1"></div>
+            <div class="cam-motion" id="m1"><div class="motion-lbl">// MOTION DETECTED</div></div>
+            <div class="cam-hover"></div>
+          </div>
+<div class="cam-feed">
+            <div class="cam-bg"></div><div class="scene-lines"></div>
+            <div class="cam-scan"></div>
+            <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+            <div class="cam-detect" style="top:45%;left:18%;width:26%;height:28%"></div>
+            <div class="cam-lbl">CAM 03 &mdash; PARKING</div>
+            <div class="cam-live-badge"><div class="live-dot"></div>LIVE</div>
+            <div class="cam-fps">30 FPS</div>
+            <div class="cam-ts" id="ts2"></div>
+            <div class="cam-motion" id="m2"><div class="motion-lbl">// MOTION DETECTED</div></div>
+            <div class="cam-hover"></div>
+          </div>
+<div class="cam-feed">
+            <div class="cam-bg"></div><div class="scene-lines"></div>
+            <div class="cam-scan"></div>
+            <div class="cc tl"></div><div class="cc tr"></div><div class="cc bl"></div><div class="cc br"></div>
+            
+            <div class="cam-lbl">CAM 04 &mdash; SERVER ROOM</div>
+            <div class="cam-live-badge"><div class="live-dot"></div>LIVE</div>
+            <div class="cam-fps">30 FPS</div>
+            <div class="cam-ts" id="ts3"></div>
+            <div class="cam-motion" id="m3"><div class="motion-lbl">// MOTION DETECTED</div></div>
+            <div class="cam-hover"></div>
+          </div>
+        </div>
+        <div class="cam-statusbar">
+          <div class="sb-left"><div class="sb-dot"></div>ALL STREAMS ACTIVE</div>
+          <div class="sb-right" id="sb-time"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip"><div class="strip-track" id="strip-track"></div></div>
+
+<!-- LIVE DETECTION DEMO -->
+<div class="sec" id="detection">
+  <div class="rv">
+    <div class="ey">Live Intelligence</div>
+    <h2 class="sec-h">Watch detection<br>happen in real time.</h2>
+    <p class="sec-sub">This is what VANTA does every millisecond. Object detected, classified, tracked, recorded. Automatically.</p>
+  </div>
+  <div class="det-wrap rv d1">
+    <div class="det-head">
+      <div class="det-head-l">CAM 05 &mdash; PERIMETER EAST &mdash; 1920&times;1080</div>
+      <div class="det-head-r"><div class="live-dot"></div>REC</div>
+    </div>
+    <div class="det-stage" id="detstage">
+      <div class="det-crosshair-x" id="chx"></div>
+      <div class="det-crosshair-y" id="chy"></div>
+      <div class="det-floor"></div>
+      <div class="det-gridfloor"></div>
+      <div class="walker-shadow" id="wshadow" style="bottom:11.5%"></div>
+      <svg id="walker" width="58" height="116" viewBox="0 0 58 116">
+        <ellipse cx="29" cy="111" rx="0" ry="0"/>
+        <g fill="#54c8f5">
+          <g id="armB" style="transform-origin:29px 40px;opacity:.45">
+            <path d="M26 36 L23.5 56 Q23 60 24.5 63 L28.5 62 Q28 58 28.6 54 L31 38 Z"/>
+          </g>
+          <g id="legB" style="transform-origin:29px 64px;opacity:.45">
+            <path d="M25 60 L23 82 Q22.6 86 23.5 90 L23 102 L31.5 102 L30.5 88 Q31 82 31.8 76 L33 62 Z"/>
+            <path d="M22.5 101 L32 101 L33.5 106 Q34 108 32 108 L23 108 Q21.5 108 22 105.5 Z"/>
+          </g>
+          <path d="M22.5 33 Q29 28.5 35.5 33 L34.8 52 Q34.5 60 33.5 66 Q29 69 24.5 66 Q23.4 60 23.2 52 Z"/>
+          <path d="M25.8 24 L32.2 24 L31.6 31 L26.4 31 Z"/>
+          <circle cx="29" cy="15" r="8.6"/>
+          <path d="M21.8 16 Q20.6 11 24 7.6 Q22 13 22.8 17 Z" opacity=".8"/>
+          <g id="legF" style="transform-origin:29px 64px">
+            <path d="M25 60 L23 82 Q22.6 86 23.5 90 L23 102 L32 102 L31 88 Q31.4 82 32.2 76 L33.5 62 Z"/>
+            <path d="M22.5 101 L32.5 101 L34 106 Q34.5 108 32.5 108 L23 108 Q21.5 108 22 105.5 Z"/>
+          </g>
+          <g id="armF" style="transform-origin:29px 40px">
+            <path d="M25.5 35.5 L23 57 Q22.6 61 24 64.5 L28.5 63.5 Q28 59 28.6 55 L31 37.5 Z"/>
+            <circle cx="26" cy="65" r="2.6"/>
+          </g>
+        </g>
+      </svg>
+      <div id="detbox" style="width:74px;height:124px">
+        <div class="db-lbl" id="dblbl">PERSON 98.2%</div>
+        <div class="db-c tl"></div><div class="db-c tr"></div><div class="db-c bl"></div><div class="db-c br"></div>
+      </div>
+      <div class="det-telemetry">
+        <div>OBJECT CLASS <span class="tv">PERSON</span></div>
+        <div>CONFIDENCE <span class="tv" id="tconf">98.2%</span></div>
+        <div>VELOCITY <span class="tv" id="tvel">1.3 m/s</span></div>
+        <div>TRACK ID <span class="tv">#0427</span></div>
+        <div>ZONE <span class="tv">PERIMETER-E</span></div>
+      </div>
+    </div>
+    <div class="det-foot">
+      <span>ENGINE <b>VANTA-AI</b></span>
+      <span>INFERENCE <b id="tinf">11ms</b></span>
+      <span>RESPONSE <b>MOTION &rarr; RECORD</b></span>
+      <span>DEDUP <b>5s COOLDOWN</b></span>
+    </div>
+  </div>
+  <div class="feed-wrap">
+    <div class="feed-col rv d2">
+      <div class="feed-title"><div class="sb-dot"></div>LIVE EVENT STREAM</div>
+      <div class="feed-list" id="feedlist"></div>
+    </div>
+    <div class="feed-col rv d3">
+      <div class="feed-title">SYSTEM TELEMETRY</div>
+      <div class="feed-stats">
+        <div class="fs-row"><div class="fs-head"><span>Stream throughput</span><span id="fsv0">0 Mbps</span></div><div class="fs-bar"><div class="fs-fill" id="fsb0"></div></div></div>
+        <div class="fs-row"><div class="fs-head"><span>Detection accuracy</span><span id="fsv1">0%</span></div><div class="fs-bar"><div class="fs-fill" id="fsb1"></div></div></div>
+        <div class="fs-row"><div class="fs-head"><span>Storage efficiency</span><span id="fsv2">0%</span></div><div class="fs-bar"><div class="fs-fill" id="fsb2"></div></div></div>
+        <div class="fs-row"><div class="fs-head"><span>Uptime this quarter</span><span id="fsv3">0%</span></div><div class="fs-bar"><div class="fs-fill" id="fsb3"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:80px 52px" id="stats">
+  <div class="stat-grid">
+    <div class="stat-cell rv"><div class="stat-n" data-t="99.9" data-s="%" data-dec="1">0%</div><div class="stat-l">System Uptime</div></div>
+    <div class="stat-cell rv d1"><div class="stat-n" data-t="200" data-p="&lt;" data-s="ms">0</div><div class="stat-l">Stream Latency</div></div>
+    <div class="stat-cell rv d2"><div class="stat-n" data-t="100" data-s="%">0</div><div class="stat-l">ONVIF Compatible</div></div>
+    <div class="stat-cell rv d3"><div class="stat-n" data-t="3" data-s=" Roles">0</div><div class="stat-l">Access Tiers</div></div>
+  </div>
+</div>
+
+<div class="sec" id="cta">
+  <div class="cta-box rv">
+    <div class="ey" style="text-align:center;margin-bottom:18px">Get Started</div>
+    <h2 class="cta-t">Ready to see VANTA<br>in action?</h2>
+    <p class="cta-s">Request a live demo. We will show you what enterprise surveillance actually looks like.</p>
+    <div class="cta-row">
+      <input type="email" class="cta-inp" placeholder="your@company.com" id="demo-email">
+      <button class="btn-p" id="demo-btn" onclick="handleDemo()">Request Demo</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">VANTA VMS</div>
+  <div class="foot-copy">&#169; 2026 VANTA VMS &mdash; vantavms.com</div>
+  <div class="foot-links">
+    <a href="features.html">Features</a>
+    <a href="industries.html">Industries</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
