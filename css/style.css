@@ -274,6 +274,7 @@ footer{padding:38px 52px;border-top:1px solid var(--brd);display:flex;align-item
 .page-hero{padding:150px 52px 70px;max-width:1280px;margin:0 auto}
 .page-hero .sec-h{font-size:clamp(38px,4.5vw,62px)}
 .walker-shadow{position:absolute;width:46px;height:7px;border-radius:50%;background:rgba(0,0,0,.5);filter:blur(3px);will-change:transform}
+#walker{position:absolute;bottom:13%;left:0;will-change:transform}
 .crumb{font-family:var(--mn);font-size:10px;color:var(--dim);letter-spacing:.14em;margin-bottom:24px}
 .crumb a{color:var(--dim);text-decoration:none}
 .crumb a:hover{color:var(--blue)}
