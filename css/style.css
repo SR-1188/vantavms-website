@@ -212,7 +212,6 @@ footer{padding:38px 52px;border-top:1px solid var(--brd);display:flex;align-item
 .det-stage{position:relative;height:300px;overflow:hidden;background:linear-gradient(180deg,#04091a 0%,#050d1c 55%,#040a16 100%)}
 .det-floor{position:absolute;bottom:0;left:0;right:0;height:26%;border-top:1px solid rgba(14,165,233,.1);background:linear-gradient(180deg,rgba(14,165,233,.025),transparent)}
 .det-gridfloor{position:absolute;bottom:0;left:0;right:0;height:26%;background-image:linear-gradient(90deg,rgba(14,165,233,.05) 1px,transparent 1px);background-size:70px 100%;pointer-events:none}
-#walker{position:absolute;bottom:13%;left:-80px;will-change:transform}
 #detbox{position:absolute;left:0;top:0;border:1.5px solid var(--blue);border-radius:3px;pointer-events:none;box-shadow:0 0 14px rgba(14,165,233,.2)}
 #detbox .db-lbl{position:absolute;top:-22px;left:-1.5px;background:var(--blue);color:#021019;font-family:var(--mn);font-size:9px;font-weight:500;padding:3px 8px;border-radius:2px 2px 0 0;letter-spacing:.06em;white-space:nowrap}
 #detbox .db-c{position:absolute;width:8px;height:8px;border-color:var(--blt);border-style:solid}
